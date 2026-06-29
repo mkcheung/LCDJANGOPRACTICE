@@ -37,5 +37,15 @@ def three_zeroes(nums: List[int]) -> List[List[int]]:
     
     return solution_space
 
+def two_sum(nums:List[int], target:int) -> List[int]:
+    seen = {}
 
-            
+    for i, num in enumerate(nums):
+        complement = target - num
+
+        if complement in seen:
+            return [seen[complement], i]
+        else:
+            seen[num] = i
+
+    return []

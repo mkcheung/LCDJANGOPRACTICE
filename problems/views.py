@@ -3,9 +3,34 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .serializers import ThreeSumSerializer
+from .serializers import TwoSumSerializer, ThreeSumSerializer
 
 class ThreeSumView(APIView):
-    def(self, request):
+    def post(self, request):
         serializer = ThreeSumSerializer(data=request.data)
-        pass
+        if serializer.is_valid():
+            result = serializer.save()
+
+            return Response(
+                result,
+                status=status.HTTP_200_OK
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+class TwoSumView(APIView):
+    def post(self, request):
+        serializer = TwoSumSerializer(data=request.data)
+        if serializer.is_valid():
+            result = serializer.save()
+
+            return Response(
+                result,
+                status=status.HTTP_200_OK
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
