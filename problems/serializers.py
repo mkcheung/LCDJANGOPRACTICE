@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .leetcode import two_sum,three_zeroes
+from .leetcode import two_sum,three_zeroes,longest_non_repeatingsubstring
 
 class ThreeSumSerializer(serializers.Serializer):
     
@@ -40,5 +40,21 @@ class TwoSumSerializer(serializers.Serializer):
 
         return {
             'nums':nums,
+            'result': result
+        }
+
+class LongestNonRepeatingSubstringSerializer(serializers.Serializer):
+    s = serializers.CharField(
+        allow_blank=False,
+        trim_whitespace=True
+    )
+
+    result = serializers.CharField(read_only=True)
+
+    def create(self, validated_data):
+        s = validated_data['s']
+        result = longest_non_repeatingsubstring(s)
+
+        return {
             'result': result
         }

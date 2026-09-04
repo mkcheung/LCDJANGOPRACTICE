@@ -47,18 +47,6 @@ def two_sum(nums:List[int], target:int) -> List[int]:
             seen[num] = i
     return []
 
-# def two_sum(nums:List[int], target:int) -> List[int]:
-    # seen = {}
-
-    # for i, num in enumerate(nums):
-    #     complement = target - num
-
-    #     if complement in seen:
-    #         return [seen[complement], i]
-    #     else:
-    #         seen[num] = i
-
-    # return []
 # GIVEN A STRING OF CHARACTERS, FIND THE LONGEST POSSIBLE
 # SEQUENCE THAT DOESN'T HAVE A REPEATING CHARACTER
 # Time Complexity: O(n)
@@ -71,13 +59,13 @@ def longest_non_repeatingsubstring(s: str):
     for right, ch in enumerate(s):
         if ch in last_seen and last_seen[ch] >= left:
             left = last_seen[ch] + 1
-        left_seen[ch] = right
+        last_seen[ch] = right
 
         if right - left + 1 > best_len:
             best_len = right - left + 1
             best_left = left
-        
-        return s[best_left:best_left+best_len]
+
+    return s[best_left:best_left+best_len]
 
 def longest_palindrome(s:str) -> str:
     if s is None:
