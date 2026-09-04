@@ -252,7 +252,7 @@ from collections import defaultdict
 
 def is_anagram(str1: str, str2: str) -> bool:
     if not str1 or not str2 or len(str1) != len(str2):
-        return False:
+        return False
 
     counts = defaultdict(int)
 

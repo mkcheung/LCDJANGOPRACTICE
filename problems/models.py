@@ -21,11 +21,12 @@ class Problem(models.Model):
     def __str__(self) -> str:
         return self.title
 
-class Submission:
+class Submission(models.Model):
     class Meta:
         db_table = 'submissions'
 
     problem = models.ForeignKey(
+        Problem,
         on_delete=models.CASCADE,
         related_name="submissions"
     )

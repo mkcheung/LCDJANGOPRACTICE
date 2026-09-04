@@ -27,7 +27,7 @@ class TwoSumView(APIView):
         if serializer.is_valid():
             problem = Problem.objects.get_or_create(slug="two_sum", defaults={"title": "TWO SUM", "leetcode_number": 1, "difficulty": "EASY"})
             result = serializer.save()
-            submission = Submission.objects.create(problem=problem, input_data=serializer.validated_data, result=result)
+            submission = Submission.objects.create(problem=problem, input_data=serializer.validated_data, result=resuls)
 
             return Response(
                 result,
