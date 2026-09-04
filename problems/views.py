@@ -10,7 +10,9 @@ class ThreeSumView(APIView):
     def post(self, request):
         serializer = ThreeSumSerializer(data=request.data)
         if serializer.is_valid():
+            problem, _ = Problem.objects.get_or_create(slug="three_sum", defaults={"title": "THREE SUM", "leetcode_number":15, "difficulty": "MEDIUM"})
             result = serializer.save()
+            submission = Submission.objects.create(problem=problem, input_data=serializer.validated_data, result=result)
 
             return Response(
                 result,
@@ -25,9 +27,9 @@ class TwoSumView(APIView):
     def post(self, request):
         serializer = TwoSumSerializer(data=request.data)
         if serializer.is_valid():
-            problem = Problem.objects.get_or_create(slug="two_sum", defaults={"title": "TWO SUM", "leetcode_number": 1, "difficulty": "EASY"})
+            problem, _ = Problem.objects.get_or_create(slug="two_sum", defaults={"title": "TWO SUM", "leetcode_number": 1, "difficulty": "EASY"})
             result = serializer.save()
-            submission = Submission.objects.create(problem=problem, input_data=serializer.validated_data, result=resuls)
+            submission = Submission.objects.create(problem=problem, input_data=serializer.validated_data, result=result)
 
             return Response(
                 result,
