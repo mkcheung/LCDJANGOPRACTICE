@@ -249,3 +249,16 @@ def merge_intervals(seqs: List[List[int]]) -> List[List[int]]
 
     return merged    
 
+from collections import defaultdict
+
+def is_anagram(str1: str, str2: str) -> bool:
+    if not str1 and not str2 and len(str1) != len(str2):
+        return False
+
+    counts = defaultdict(int)
+
+    for i in range(len(str1)):
+        counts[str1[i]] += 1
+        counts[str2[i]] -= 1
+
+    return all( v == 0 for v in counts.values())
