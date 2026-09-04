@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Problem
+from .models import Problem, Submission
 
 from .serializers import TwoSumSerializer, ThreeSumSerializer, LongestNonRepeatingSubstringSerializer
 
@@ -27,6 +27,7 @@ class TwoSumView(APIView):
         if serializer.is_valid():
             problem = Problem.objects.get_or_create(slug="two_sum", defaults={"title": "TWO SUM", "leetcode_number": 1, "difficulty": "EASY"})
             result = serializer.save()
+            submission = Submission.objects.create(problem=problem, input_data=serializer.validated_data, result=result)
 
             return Response(
                 result,

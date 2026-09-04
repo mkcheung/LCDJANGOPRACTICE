@@ -20,3 +20,19 @@ class Problem(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+class Submission:
+    class Meta:
+        db_table = 'submissions'
+
+    problem = models.ForeignKey(
+        on_delete=models.CASCADE,
+        related_name="submissions"
+    )
+
+    input_data = models.JSONField()
+
+    result = models.JSONField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
