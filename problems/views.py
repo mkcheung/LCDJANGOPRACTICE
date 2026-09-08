@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Problem, Submission
 
-from .serializers import TwoSumSerializer, ThreeSumSerializer, LongestNonRepeatingSubstringSerializer, LongestPalindromeSerializer
+from .serializers import TwoSumSerializer, ThreeSumSerializer, LongestNonRepeatingSubstringSerializer, LongestPalindromeSerializer, LongestIncreasingSubsequenceSerializer
 
 class ThreeSumView(APIView):
     def post(self, request):

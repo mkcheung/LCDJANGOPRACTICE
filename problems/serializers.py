@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .leetcode import two_sum,three_zeroes,longest_non_repeatingsubstring, longest_palindrome
+from .leetcode import two_sum,three_zeroes,longest_non_repeatingsubstring, longest_palindrome, longest_increasing_subsequence
 
 class ThreeSumSerializer(serializers.Serializer):
     
@@ -70,6 +70,21 @@ class LongestPalindromeSerializer(serializers.Serializer):
     def create(self, validated_data):
         s = validated_data['s']
         result = longest_palindrome(s)
+
+        return {
+            'result': result
+        }
+
+class LongestIncreasingSubsequenceSerializer(serializers.Serializer):
+    nums = serializers.ListField(
+        child=serializers.IntegerField()
+    )
+
+    result = serializers.IntegerField(read_only=True)
+
+    def create(self, validated_data):
+        nums = validated_data['nums']
+        result = longest_increasing_subsequence(nums)
 
         return {
             'result': result

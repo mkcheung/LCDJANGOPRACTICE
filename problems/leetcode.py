@@ -262,3 +262,59 @@ def is_anagram(str1: str, str2: str) -> bool:
 
     return all(v==0 for v in counts.values())
 
+from collections import Counter
+
+def top_k_element(nums: List[int], num_of_top_elements: int) -> List[int]:
+
+    if not nums:
+        return []
+
+    freq = Counter(nums)
+
+    buckets = [[] for _ in range(len(nums) + 1)]
+
+    for num, count in freq.items():
+        buckets[count].append(num)
+
+    result = []
+    for i in range(len(buckets) - 1, 0, -1):
+        for num in buckets[i]:
+            result.append(buckets[i])
+
+        if(len(result) == num_of_top_elements):
+            return result
+    
+    return result
+
+from typing import TypedDict
+
+class ConsecutiveResult(TypedDict):
+    best_length: int
+    sequence: List[int]
+
+def longest_increasing_consecutive_subseq(nums: List[int]) -> ConsecutiveResult:
+    sub_seq = []
+
+    if not nums:
+        return {"Best Length": 0, "Sequence": []}
+
+    num_set = set(nums)
+    best_length = 0
+    length = 0 
+
+    for num in num_set:
+        cur_seq = []
+        if num - 1 not in num_set: 
+            current = num
+            length = 1
+            cur_seq.append(num)
+            while (current + 1) in num_set:
+                length += 1
+                current += 1
+                cur_seq.append(current)
+
+            if length > best_length:
+                best_length = length
+                sub_seq = cur_seq
+    
+    return {"Best Length": best_length, "Sequence": sub_seq} 
