@@ -318,3 +318,18 @@ def longest_increasing_consecutive_subseq(nums: List[int]) -> ConsecutiveResult:
                 sub_seq = cur_seq
     
     return {"Best Length": best_length, "Sequence": sub_seq} 
+
+import heapq
+
+def kth_largest_element(nums: List[int], k: int) -> int | None:
+    heap = []
+    
+    if not nums:
+        return 
+
+    for num in nums:
+        heapq.heappush(heap, num)
+        if len(heap) > k:
+            heapq.heappop(heap)
+    
+    return heap[0]
