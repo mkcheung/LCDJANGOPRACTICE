@@ -123,30 +123,29 @@ def lower_bound(tails: List[int], target:int):
     return lo
 
 def valid_parenthesis(s:str) -> bool:
-    if s is None:
+    if not s:
         return False
 
-    closer_to_opener = {
-        ')': '(',
-        ']': '[',
-        '}': '{'
+    openers: List[str] = []
+
+    closers_to_openers = {
+        ')':'(',
+        ']':'[',
+        '}':'{'
     }
 
-    openers = []
-
     for i, ch in enumerate(s):
-        if ch in closer_to_opener:
+        if ch in closers_to_openers:
             if not openers:
                 return False
-
-            item = openers.pop()
-
-            if item != closer_to_opener[ch]:
+            popped = openers.pop()
+            if closers_to_openers[ch] != popped:
                 return False
         else:
             openers.append(ch)
-    
+
     return True if not openers else False
+
 
 def trapped_rainwater(heights: List[int]) -> int:
     if heights is None:
