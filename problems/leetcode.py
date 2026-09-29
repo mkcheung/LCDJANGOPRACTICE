@@ -50,22 +50,24 @@ def two_sum(nums:List[int], target:int) -> List[int]:
 # GIVEN A STRING OF CHARACTERS, FIND THE LONGEST POSSIBLE
 # SEQUENCE THAT DOESN'T HAVE A REPEATING CHARACTER
 # Time Complexity: O(n)
-def longest_non_repeatingsubstring(s: str):
+def longest_non_repeating_substring(seq: str) -> str:
+    if not seq:
+        return ''
+
+    left: int = 0 
     best_left: int = 0
-    best_len: int = 0
-    last_seen = {}
-    left: int = 0
+    best_length: int = 0
+    have_seen: Dict(str, int)
 
-    for right, ch in enumerate(s):
-        if ch in last_seen and last_seen[ch] >= left:
-            left = last_seen[ch] + 1
-        last_seen[ch] = right
-
-        if right - left + 1 > best_len:
-            best_len = right - left + 1
+    for right, ch in enumerate(seq):
+        if ch in have_seen and have_seen[ch] > left:
+            left = have_seen[ch] + 1
+        have_seen[ch] = right
+        if right - left + 1 > best_length:
+            best_length = right - left + 1
             best_left = left
-
-    return s[best_left:best_left+best_len]
+        
+    return seq[best_left:best_left+best_length]
 
 def longest_palindrome(s:str) -> str:
     if s is None:
@@ -92,20 +94,20 @@ def expand(s:str, left: int, right:int):
     
     return right - left - 1
 
-def longest_increasing_subsequence(nums: List[int]) -> List[int]:
+def longest_increasing_subseq(seq: List[int]) -> List[int]:
+    if seq is None:
+        return []
+    
     tails: List[int] = []
-
-    if not nums:
-        return
-
-    for i, num in enumerate(nums):
+    
+    for i, num in enumerate(seq):
         x = lower_bound(tails, num)
-        if x == len(nums):
+        if x == len(tails):
             tails.append(num)
         else:
             tails[x] = num
-
-    return len(tails)
+    
+    return tails
 
 
 def lower_bound(tails: List[int], target:int):
@@ -171,26 +173,28 @@ def trapped_rainwater(heights: List[int]) -> int:
     
     return water
 
-def product_of_array_except_self(nums: List[int]) -> int:
-    if nums is None: 
-        return 0
+def product_of_array_except_self(nums: List[int]) -> List[int]:
+    if not nums:
+        return 
 
     n = len(nums)
 
     ans = [1] * n
 
-    carry = 1
-    for i in range(len(nums)):
+    carry: int = 1
+
+    for i in range(nums):
         ans[i] = carry
         carry *= nums[i]
-    
+
     carry = 1
 
-    for i in range (n-1, -1, -1):
-        ans[i] *= carry
+    for i in range(len(nums)-1, 0, -1):
+        ans[i] *= carry 
         carry *= nums[i]
 
     return ans
+
 
 def container_of_water(nums:List[int]) -> int:
     if nums is None:
@@ -280,7 +284,7 @@ def top_k_element(nums: List[int], num_of_top_elements: int) -> List[int]:
         for num in buckets[i]:
             result.append(buckets[i])
 
-        if(len(result) == num_of_top_elements):
+        if len(result) == num_of_top_elements:
             return result
     
     return result
@@ -332,3 +336,39 @@ def kth_largest_element(nums: List[int], k: int) -> int | None:
             heapq.heappop(heap)
     
     return heap[0]
+
+grid1 = [
+    ['1', '1', '1', '1', '0'],
+    ['1', '1', '0', '1', '0'],
+    ['1', '1', '0', '0', '0'],
+    ['0', '0', '0', '0', '0'],
+]  # only 1 island here
+
+grid2 = [
+    ['1', '1', '0', '0', '0'],
+    ['1', '1', '0', '0', '0'],
+    ['0', '0', '1', '0', '0'],
+    ['0', '0', '0', '1', '1'],
+]  # only 3 islands here
+
+def num_islands(grid: List[int]) -> int
+    if not grid:
+        return 0
+    
+    rows, cols = len(grid), len(grid[0])
+    count = 0 
+
+    def dfs(r: int, c: int):
+        if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] == '0'
+            return
+        dfs[r][c] = '0'
+        dfs(r + 1, c)
+        dfs(r - 1, c)
+        dfs(r, c + 1)
+        dfs(r, c - 1)
+
+    for r in range(rows):
+        for c in range(cols):
+            count += 1
+            dfs(r, c)
+    return count

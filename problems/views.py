@@ -74,3 +74,8 @@ class LongestPalindromeView(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+# class LongestIncreasingSubsequence(APIView):
+#     def post(self, request):
+#         serializer = LongestIncreasingSubsequenceSerializer(data=request.data)
+#         if serializer.is_valid():
