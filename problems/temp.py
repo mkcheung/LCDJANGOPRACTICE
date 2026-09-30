@@ -264,60 +264,68 @@ def is_anagram(seq1: str, seq2:str) -> bool:
     
 from collections import Counter
 
-def top_k_element(nums: List[int], num_elements: int) -> List[int]:
-    if not nums or not num_elements:
+def top_k_element(nums:List[int], k:int):
+    if not nums:
         return []
-    
+
     freq = Counter(nums)
 
     buckets = [ [] for _ in range(len(nums) + 1)]
-    for num, count in freq.items():
-        buckets[count].append(num)
+    for num, count in enumerate(freq):
+        buckets[num].append(count)
+    
+    result = []
 
-    result: List[int] = []
     for i in range(len(buckets)-1, 0, -1):
         for num in buckets[i]:
             result.append(num)
 
-        if len(result) >= num_elements:
+        if len(result) >= k
             return result
-    
-    return result
+
+    return result 
+
+
 
 from typing import TypedDict
 
 class ConsecutiveResult(TypedDict):
-    best_length: int
-    sequence: List[str]
+    'best_length': int
+    'sequence': List[int]
 
-def longest_increasing_consecutive_subseq(nums:List[int]) -> ConsecutiveResult:
+def longest_increasing_consecutive_subseq(nums:int) -> ConsecutiveResult:
+    sub_seq = []
+
+    num_set = set(nums)
+
     if not nums:
-        return {"Best Length": 0, "Sequence": []}
+        return {
+            'best_length':0
+            'sequence': sub_seq
+        }
 
-    num_seq = set(nums)
-    best_length: int = 0 
-    length: int = 0
-    sub_seq: List[int] = []
-
-    for num in nums:
+    best_length: int = 0
+    
+    for num in num_set:
         cur_seq = []
-        if(num - 1 in num_seq):
+        if num - 1 in num_set:
             length = 1
-            current = num
+            curent = num
             cur_seq.append(current)
-            while(current + 1 in num_seq)
+            while current + 1 in num_set:
                 length += 1
                 current += 1
                 cur_seq.append(current)
 
             if length > best_length:
                 best_length = length
-                sub_seq = best_length
+                sub_seq = cur_seq
     
     return {
         'best_length': best_length,
         'sequence': sub_seq
     }
+
 
 import heapq
 
@@ -348,21 +356,26 @@ grid2 = [
 def num_islands(grid):
     if not grid:
         return 0
-
-    rows, cols = len(grid), len(grid[0])
-    count = 0 
+    
+    rows:int = len(grid)
+    cols:int = len(grid[0])
+    num_islands: int = 0
 
     def dfs(r:int, c:int):
-        if r < 0 or c < 0 or r >= rows or c >= col or grid[r][c] == '0':
+        if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] == '0'
             return
+        
         grid[r][c] = '0'
-        dfs(r + 1, c)
-        dfs(r - 1, c)
+
+        dfs(r+1, c)
+        dfs(r-1, c)
         dfs(r, c + 1)
         dfs(r, c - 1)
 
     for r in range(rows):
         for c in range(cols):
-            if(grid[r][c] == 1):
-                count += 1
+            if grid[r][c] == '1'
+                num_islands += 1
                 dfs(r, c)
+
+    return num_islands

@@ -351,24 +351,29 @@ grid2 = [
     ['0', '0', '0', '1', '1'],
 ]  # only 3 islands here
 
-def num_islands(grid: List[int]) -> int
+def num_islands(grid):
     if not grid:
         return 0
     
-    rows, cols = len(grid), len(grid[0])
-    count = 0 
+    rows:int = len(grid)
+    cols:int = len(grid[0])
+    num_islands: int = 0
 
-    def dfs(r: int, c: int):
+    def dfs(r:int, c:int):
         if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] == '0'
             return
-        dfs[r][c] = '0'
-        dfs(r + 1, c)
-        dfs(r - 1, c)
+        
+        grid[r][c] = '0'
+
+        dfs(r+1, c)
+        dfs(r-1, c)
         dfs(r, c + 1)
         dfs(r, c - 1)
 
     for r in range(rows):
         for c in range(cols):
-            count += 1
-            dfs(r, c)
-    return count
+            if grid[r][c] == '1'
+                num_islands += 1
+                dfs(r, c)
+
+    return num_islands
