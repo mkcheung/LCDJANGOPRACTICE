@@ -60,7 +60,7 @@ def longest_non_repeating_substring(seq: str) -> str:
     have_seen: Dict(str, int)
 
     for right, ch in enumerate(seq):
-        if ch in have_seen and have_seen[ch] > left:
+        if ch in have_seen and have_seen[ch] >= left:
             left = have_seen[ch] + 1
         have_seen[ch] = right
         if right - left + 1 > best_length:

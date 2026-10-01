@@ -1,75 +1,76 @@
-def three_zeroes(nums: List[int]) -> List[List[int]]:
-    solution_space: List[int] = []
-    
+def three_zeroes(nums:List[int]) -> List[List[int]]:
     if not nums:
         return []
 
+    solution_space: List[[List[int]]]
+
+    nums = sort(nums)
+
     overall_length = len(nums)
-    nums.sort()
 
     for i in range(overall_length - 2):
         if nums[i] >= 0:
             return solution_space
-        
-        if i > 0 and nums[i] == nums[i-1]:
-            continue
 
+        if i > 0 and num[i] == num[i-1]:
+            continue
+        
         left, right = i + 1, overall_length - 1
 
         while left < right:
-            sum = nums[i] + nums[left] + nums[right]
-
-            if sum == 0:
+            thesum = nums[i] + nums[left] + nums[right]
+            if thesum == 0:
                 solution_space.append([nums[i], nums[left], nums[right]])
 
                 while left < right and nums[left] == nums[left+1]:
                     left += 1
-
                 while left < right and nums[right] == nums[right-1]:
                     right -= 1
-
+                
                 left += 1
                 right -= 1
-            elif sum < 0:
+            elif thesum < 0:
                 left += 1
             else:
                 right -= 1
         
     return solution_space
 
-def two_sum(nums: List[int], target: int) -> List[int]:
-    seen = {}
-
+def two_sum(nums:List[int], target:int) -> bool:
     if not nums:
         return []
+    
+    have_seen: Dict(int,int)
 
     for i, num in enumerate(nums):
-        complement = num - target
-        if complement in seen:
-            return [seen[complement], i]
+        complement = target - num
+        if complement in have_seen:
+            return [have_seen[complement], i]
         else:
-            seen[num] = i
-    
-    return []
+            have_seen[num] = i
+    return[]
 
 def longest_non_repeating_substring(seq: str) -> str:
     if not seq:
         return ''
 
-    left: int = 0 
+    last_seen: Dict(str, int) = {}
+    left: int = 0
     best_left: int = 0
     best_length: int = 0
-    have_seen: Dict[str, int] = {}
 
     for right, ch in enumerate(seq):
-        if ch in have_seen and have_seen[ch] > left:
-            left = have_seen[ch] + 1
-        have_seen[ch] = right
+        if ch in last_seen and last_seen[ch] >= left:
+            left = last_seen[ch] + 1
+        
+        last_seen[ch] = right
+        
         if right - left + 1 > best_length:
             best_length = right - left + 1
             best_left = left
-        
+    
     return seq[best_left:best_left+best_length]
+    
 
 def longest_palindrome(seq: str) -> str:
     if not seq:
@@ -219,125 +220,124 @@ def container_of_water(nums: List[int]) -> int:
 
 from collections import defaultdict
 
-def group_anagrams(seqs: List[str]) -> List[List[str]]:
+def group_anagrams(seqs:List[str]) -> List[List[str]]:
     if not seqs:
-        return False
+        return []
 
-    grouped = defaultdict(list);
+    grouped = defaultdict(list)
 
-    for i, seq in enumerate(seqs):
+    for seq in seqs:
         sorted = "".join(sorted(seq))
         grouped[sorted].append(seq)
 
     return grouped
 
-def merge_intervals(seqs: List[List[int]]) -> List[List[int]]:
+def merge_intervals(seqs:List[List[int]]) -> List[int]:
     if not seqs:
         return []
-    
+
+    merged:List[List[int]] = [] 
+
     seqs = sorted(seqs, key = lambda s: (s[0], s[1]))
 
-    merged = [seqs[0]]
+    merged[list(seqs[0])]
 
     for start, end in seqs[1:]:
-        latest = merged[-1]
-        if latest[1] >= start:
-            latest[1] = max(end, latest[1])
+        current = merged[-1]
+        if current[1] >= start:
+            current[1] = max(current[1], end)
         else:
             merged.append([start, end])
-    
+
     return merged
+
 
 from collections import defaultdict
 
-def is_anagram(seq1: str, seq2:str) -> bool:
-    if not seq1 or not seq2 or len(seq1) != len(seq2):
+def is_anagram(str1:str, str2:str) -> bool:
+    if not str1 or not str2 or len(str1) != len(str2):
         return False
-    
+
     count = defaultdict(int)
 
-    for i in range(len(seq1)):
-        count[seq1[i]] += 1
-        count[seq2[i]] -= 1
-
-    return all( v == 0 for v in count.values())
+    for i in range(len(str1)):
+        count[str1[i]] += 1
+        count[str2[i]] -= 1
     
+    return all( v == 0 for v in counts.values())
+
 from collections import Counter
 
-def top_k_element(nums:List[int], k:int):
+def top_k_element(nums:List[int], k:int) -> List:int:
     if not nums:
-        return []
+        return [] 
 
     freq = Counter(nums)
 
-    buckets = [ [] for _ in range(len(nums) + 1)]
-    for num, count in enumerate(freq):
-        buckets[num].append(count)
+    buckets = [ [] for _ in range(len(nums) + 1) ]
+    for numoccur, num in freq.items():
+        buckets[numoccur].append(num)
     
-    result = []
+    result: List[int] = []
 
     for i in range(len(buckets)-1, 0, -1):
-        for num in buckets[i]:
+        for num in bucket[i]:
             result.append(num)
 
-        if len(result) >= k
-            return result
-
-    return result 
-
+            if len(result) = k
+                return result
+    
+    return result
 
 
 from typing import TypedDict
 
 class ConsecutiveResult(TypedDict):
-    'best_length': int
-    'sequence': List[int]
+    best_length: int
+    sequence: List[int]
 
-def longest_increasing_consecutive_subseq(nums:int) -> ConsecutiveResult:
-    sub_seq = []
+def longest_increasing_consecutive_subseq(seq: List[int]) -> List[int]:
+    sub_seq: List[int] = []
 
-    num_set = set(nums)
-
-    if not nums:
+    if not seq:
         return {
-            'best_length':0
-            'sequence': sub_seq
+            'best_length':0,
+            'sequence':[]
         }
 
+    num_set: List[int] = set(seq)
     best_length: int = 0
-    
-    for num in num_set:
-        cur_seq = []
+
+    for num in nums:
+        cur_seq:int = List[]
         if num - 1 in num_set:
             length = 1
-            curent = num
-            cur_seq.append(current)
+            current = num
+            cur_seq.append(num)
             while current + 1 in num_set:
                 length += 1
                 current += 1
                 cur_seq.append(current)
-
             if length > best_length:
                 best_length = length
                 sub_seq = cur_seq
-    
-    return {
-        'best_length': best_length,
-        'sequence': sub_seq
-    }
+
+    return sub_seq
+
 
 
 import heapq
 
-def kth_largest_element(nums:List[int], k:int):
-    heap: list = []
+def kth_largest_element(nums: List[int], k:int) -> int:
+    heap = []
 
-    for num in nums:
+    for i, num in enumerate(nums):
         heapq.heappush(heap, num)
-        if len(heapq) >= k:
+        if len(heap) > k:
             heapq.heappop(heap)
 
     return heap[0]
+
 
 grid1 = [
     ['1', '1', '1', '1', '0'],
