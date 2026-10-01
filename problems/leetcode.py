@@ -50,8 +50,8 @@ def two_sum(nums:List[int], target:int) -> List[int]:
 # GIVEN A STRING OF CHARACTERS, FIND THE LONGEST POSSIBLE
 # SEQUENCE THAT DOESN'T HAVE A REPEATING CHARACTER
 # Time Complexity: O(n)
-def longest_non_repeating_substring(seq: str) -> str:
-    if not seq:
+def longest_non_repeating_substring(nums: str) -> str:
+    if not nums:
         return ''
 
     left: int = 0 
@@ -59,7 +59,7 @@ def longest_non_repeating_substring(seq: str) -> str:
     best_length: int = 0
     have_seen: Dict(str, int)
 
-    for right, ch in enumerate(seq):
+    for right, ch in enumerate(nums):
         if ch in have_seen and have_seen[ch] >= left:
             left = have_seen[ch] + 1
         have_seen[ch] = right
@@ -67,7 +67,7 @@ def longest_non_repeating_substring(seq: str) -> str:
             best_length = right - left + 1
             best_left = left
         
-    return seq[best_left:best_left+best_length]
+    return nums[best_left:best_left+best_length]
 
 def longest_palindrome(s:str) -> str:
     if s is None:

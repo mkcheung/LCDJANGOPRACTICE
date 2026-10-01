@@ -71,29 +71,27 @@ def longest_non_repeating_substring(seq: str) -> str:
     
     return seq[best_left:best_left+best_length]
     
-
 def longest_palindrome(seq: str) -> str:
     if not seq:
         return ''
-    
-    best_length: int = 0
-    best_left: int = 0
-    tails: List[str] = []
 
-    for i, ch in enumerate(seq):
+    best_length: int = 0 
+    best_left: int = 0
+
+    for i in range(len(seq)):
         length = max(expand(seq, i, i), expand(seq, i, i + 1))
         if length > best_length:
-            best_length = length
+            best_length = length:
             best_left = i - (best_length // 2)
 
-    return seq[best_left:best_left+best_length]
+    return seq[best_left: best_left + best_length]
 
-def expand(s:str, left:int, right:int) -> int:
-    while left >= 0 and right < len(s) and s[left] == s[right]:
+def expand(seq: str, left:int, right:int) -> int:
+    while left >= 0 and right < len(seq) and seq[left] == seq[right]:
         left -= 1
         right += 1
-    
-    return right - left + 1
+
+    return right - left + 1 
 
 def longest_increasing_subseq(seq:List[int]) -> List[int]:
     if not seq:
@@ -353,29 +351,28 @@ grid2 = [
     ['0', '0', '0', '1', '1'],
 ]  # only 3 islands here
 
-def num_islands(grid):
+def num_islands(grid:List[List[int]]) -> int:
     if not grid:
         return 0
-    
-    rows:int = len(grid)
-    cols:int = len(grid[0])
+
     num_islands: int = 0
+    rows: int = len(grid)
+    cols: int = len(grid[0])
 
     def dfs(r:int, c:int):
-        if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] == '0'
+        if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] != '1':
             return
-        
         grid[r][c] = '0'
-
         dfs(r+1, c)
         dfs(r-1, c)
-        dfs(r, c + 1)
-        dfs(r, c - 1)
+        dfs(r, c+1)
+        dfs(r, c-1)
+        return
+
 
     for r in range(rows):
         for c in range(cols):
-            if grid[r][c] == '1'
+            if grid[r][c] == '1':
                 num_islands += 1
-                dfs(r, c)
-
+                dfs(r,c)
     return num_islands

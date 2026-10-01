@@ -75,7 +75,20 @@ class LongestPalindromeView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-# class LongestIncreasingSubsequence(APIView):
-#     def post(self, request):
-#         serializer = LongestIncreasingSubsequenceSerializer(data=request.data)
-#         if serializer.is_valid():
+class LongestIncreasingSubsequence(APIView):
+    def post(self, request):
+        serializer = LongestIncreasingSubsequenceSerializer(data=request.data)
+        if serializer.is_valid():
+            problem, _ = Problem.objects.get_or_create(slug="longest_palindrome", defaults={"title":"LONGEST INCREASING SUBSEQUENCE", "leetcode_number": 300, "difficulty": "MEDIUM"})
+            result = serializer.save()
+            submimssion = Submission.objects.create(problem=problem, input_data=serializer.validated_data, result=result)
+
+            return Response(
+                result,
+                status = status.HTTP_200_OK
+            )
+        
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
