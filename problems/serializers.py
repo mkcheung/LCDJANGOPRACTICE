@@ -1,5 +1,21 @@
 from rest_framework import serializers
-from .leetcode import two_sum,three_zeroes,longest_non_repeating_substring, longest_palindrome, longest_increasing_subseq, valid_parenthesis, trapped_rainwater, product_of_array_except_self,container_of_water
+from .leetcode import (
+    two_sum,
+    three_zeroes,
+    longest_non_repeating_substring,
+    longest_palindrome,
+    longest_increasing_subseq,
+    valid_parenthesis,
+    trapped_rainwater,
+    product_of_array_except_self,
+    container_of_water
+)
+from .models import Problem
+
+class ProblemListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Problem
+        fields = ['slug', 'title', 'leetcode_number', 'difficulty', 'created_at']
 
 class ThreeSumSerializer(serializers.Serializer):
     

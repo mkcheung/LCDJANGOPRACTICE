@@ -5,16 +5,24 @@ from rest_framework import status
 from .models import Problem, Submission
 
 from .serializers import (
-    TwoSumSerializer,
-    ThreeSumSerializer,
+    ContainerOfWaterSerializer,
+    LongestIncreasingSubsequenceSerializer,
     LongestNonRepeatingSubstringSerializer,
     LongestPalindromeSerializer,
-    LongestIncreasingSubsequenceSerializer,
-    ValidParenthesisSerializer,
-    TrappedRainwaterSerializer,
+    ProblemListSerializer,
     ProductOfArrayExceptSelfSerializer,
-    ContainerOfWaterSerializer,
+    ThreeSumSerializer,
+    TwoSumSerializer,
+    TrappedRainwaterSerializer,
+    ValidParenthesisSerializer,
 )
+
+class ProblemListView(APIView):
+    def get(self, request):
+        problems = Problem.objects.order_by('leetcode_number')
+        serializer = ProblemListSerializer(problems, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class ThreeSumView(APIView):
     def post(self, request):
@@ -85,7 +93,7 @@ class LongestPalindromeView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-class LongestIncreasingSubsequence(APIView):
+class LongestIncreasingSubsequenceView(APIView):
     def post(self, request):
         serializer = LongestIncreasingSubsequenceSerializer(data=request.data)
         if serializer.is_valid():
@@ -103,7 +111,7 @@ class LongestIncreasingSubsequence(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-class ValidParenthesis(APIView):
+class ValidParenthesisView(APIView):
     def post(self, request):
         serializer = ValidParenthesisSerializer(data=request.data)
         if serializer.is_valid():
@@ -121,7 +129,7 @@ class ValidParenthesis(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-class TrappedRainwater(APIView):
+class TrappedRainwaterView(APIView):
     def post(self, request):
         serializer = TrappedRainwaterSerializer(data=request.data)
         if serializer.is_valid():
@@ -139,7 +147,7 @@ class TrappedRainwater(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-class ProductOfArrayExceptSelf(APIView):
+class ProductOfArrayExceptSelfView(APIView):
     def post(self, request):
         
         serializer = ProductOfArrayExceptSelfSerializer(data=request.data)
@@ -159,7 +167,7 @@ class ProductOfArrayExceptSelf(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-class ContainerOfWater(APIView):
+class ContainerOfWaterView(APIView):
     def post(self, request):
         
         serializer = ContainerOfWaterSerializer(data = request.data)
