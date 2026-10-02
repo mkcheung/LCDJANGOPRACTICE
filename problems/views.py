@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Problem, Submission
 
-from .serializers import TwoSumSerializer, ThreeSumSerializer, LongestNonRepeatingSubstringSerializer, LongestPalindromeSerializer, LongestIncreasingSubsequenceSerializer
+from .serializers import TwoSumSerializer, ThreeSumSerializer, LongestNonRepeatingSubstringSerializer, LongestPalindromeSerializer, LongestIncreasingSubsequenceSerializer, ValidParenthesisSerializer
 
 class ThreeSumView(APIView):
     def post(self, request):
@@ -79,7 +79,7 @@ class LongestIncreasingSubsequence(APIView):
     def post(self, request):
         serializer = LongestIncreasingSubsequenceSerializer(data=request.data)
         if serializer.is_valid():
-            problem, _ = Problem.objects.get_or_create(slug="longest_palindrome", defaults={"title":"LONGEST INCREASING SUBSEQUENCE", "leetcode_number": 300, "difficulty": "MEDIUM"})
+            problem, _ = Problem.objects.get_or_create(slug="longest_increasing_subsequence", defaults={"title":"LONGEST INCREASING SUBSEQUENCE", "leetcode_number": 300, "difficulty": "MEDIUM"})
             result = serializer.save()
             submimssion = Submission.objects.create(problem=problem, input_data=serializer.validated_data, result=result)
 
@@ -88,6 +88,24 @@ class LongestIncreasingSubsequence(APIView):
                 status = status.HTTP_200_OK
             )
         
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+class ValidParenthesis(APIView):
+    def post(self, request):
+        serializer = ValidParenthesisSerializer(data=request.data)
+        if serializer.is_valid():
+            problem, _ = Problem.objects.get_or_create(slug="valid_parenthesis", defaults={"title":"Valid Parenthesis", "leetcode_number": 20, "difficulty": "EASY"})
+            result = serializer.save()
+            submission = Submission.objects.create(problem=problem, input_data = serializer.validated_data, result=result)
+            
+            return Response(
+                result,
+                status = status.HTTP_200_OK
+            )
+
         return Response(
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
