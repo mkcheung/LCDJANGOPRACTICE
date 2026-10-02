@@ -57,7 +57,7 @@ def longest_non_repeating_substring(nums: str) -> str:
     left: int = 0 
     best_left: int = 0
     best_length: int = 0
-    have_seen: Dict(str, int)
+    have_seen: Dict(str, int) = {}
 
     for right, ch in enumerate(nums):
         if ch in have_seen and have_seen[ch] >= left:
@@ -117,7 +117,7 @@ def lower_bound(tails: List[int], target:int):
     while lo < hi:
         mid = (lo + hi) // 2
         
-        if tails[mid] > target:
+        if target > tails[mid]:
             lo = mid + 1
         else:
             hi = mid
@@ -158,17 +158,17 @@ def trapped_rainwater(heights: List[int]) -> int:
     best_left, best_right = 0, 0 
 
     while left < right:
-        if nums[left] < nums[right]:
-            if nums[left] > best_left:
-                best_left = nums[left]
+        if heights[left] < heights[right]:
+            if heights[left] > best_left:
+                best_left = heights[left]
             else:
-                water += best_left - nums[left]
+                water += best_left - heights[left]
             left+=1
         else:
-            if nums[right] > best_right:
-                best_right = nums[right]
+            if heights[right] > best_right:
+                best_right = heights[right]
             else:
-                water += best_right - nums[right]
+                water += best_right - heights[right]
             right-=1
     
     return water
@@ -183,13 +183,13 @@ def product_of_array_except_self(nums: List[int]) -> List[int]:
 
     carry: int = 1
 
-    for i in range(nums):
+    for i in range(len(nums)):
         ans[i] = carry
         carry *= nums[i]
 
     carry = 1
 
-    for i in range(len(nums)-1, 0, -1):
+    for i in range(len(nums)-1, -1, -1):
         ans[i] *= carry 
         carry *= nums[i]
 
@@ -207,7 +207,7 @@ def container_of_water(nums:List[int]) -> int:
     best_water: int = 0
 
     while left < right:
-        best_height = max(nums[left], nums[right])
+        best_height = min(nums[left], nums[right])
         base = right - left
         water = best_height * base
         if water > best_water:
