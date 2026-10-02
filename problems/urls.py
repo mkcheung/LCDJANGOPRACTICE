@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import TwoSumView, ThreeSumView, LongestNonRepeatingSubstringView, LongestPalindromeView, LongestIncreasingSubsequence, ValidParenthesis
+from .views import TwoSumView, ThreeSumView, LongestNonRepeatingSubstringView, LongestPalindromeView, LongestIncreasingSubsequence, ValidParenthesis, ProductOfArrayExceptSelf
 
 urlpatterns = [
     path('two-sum/', TwoSumView.as_view(), name='two-sum'),
@@ -8,5 +8,6 @@ urlpatterns = [
     path('longest-non-repeat-substring/', LongestNonRepeatingSubstringView.as_view(), name="longest-non-repeat-substr"),
     path('longest_palindrome/', LongestPalindromeView.as_view(), name="longest_palindrome"),
     path('longest_increasing_subsequence/', LongestIncreasingSubsequence.as_view(), name="longest_increasing_subsequence"),
-    path('valid_parenthesis/', ValidParenthesis.as_view(), name="valid_parenthesis")
+    path('valid_parenthesis/', ValidParenthesis.as_view(), name="valid_parenthesis"),
+    path('product_of_array_except_self/', ProductOfArrayExceptSelf.as_view(), name="product_of_array_except_self")
 ]

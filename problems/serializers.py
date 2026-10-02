@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .leetcode import two_sum,three_zeroes,longest_non_repeating_substring, longest_palindrome, longest_increasing_subseq, valid_parenthesis
+from .leetcode import two_sum,three_zeroes,longest_non_repeating_substring, longest_palindrome, longest_increasing_subseq, valid_parenthesis, trapped_rainwater
 
 class ThreeSumSerializer(serializers.Serializer):
     
@@ -104,4 +104,36 @@ class ValidParenthesisSerializer(serializers.Serializer):
 
         return {
             'result': result
+        }
+
+class TrappedRainwaterSerializer(serializers.Serializer):
+    heights = serializers.ListField(
+        child=serializers.IntegerField()
+    )
+
+    water = serializers.IntegerField(read_only=True)
+
+    def create(self, validated_data):
+        heights = validated_data['heights']
+        water = trapped_rainwater(heights)
+
+        return {
+            'water': water
+        }
+
+class ProductOfArrayExceptSelfSerializer(serializers.Serializer):
+    nums = serializers.ListField(
+        child=serializers.IntegerField()
+    )
+
+    result = serializers.ListField(
+        child=serializers.IntegerField 
+    )
+
+    def create(self, validated_data):
+        nums = validated_data['nums']
+        ans = product_of_array_except_self(nums)
+
+        return {
+            'ans': ans
         }

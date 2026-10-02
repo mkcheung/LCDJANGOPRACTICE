@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Problem, Submission
 
-from .serializers import TwoSumSerializer, ThreeSumSerializer, LongestNonRepeatingSubstringSerializer, LongestPalindromeSerializer, LongestIncreasingSubsequenceSerializer, ValidParenthesisSerializer
+from .serializers import TwoSumSerializer, ThreeSumSerializer, LongestNonRepeatingSubstringSerializer, LongestPalindromeSerializer, LongestIncreasingSubsequenceSerializer, ValidParenthesisSerializer, TrappedRainwaterSerializer, ProductOfArrayExceptSelfSerializer
 
 class ThreeSumView(APIView):
     def post(self, request):
@@ -106,6 +106,44 @@ class ValidParenthesis(APIView):
                 status = status.HTTP_200_OK
             )
 
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+class TrappedRainwater(APIView):
+    def post(self, request):
+        serializer = TrappedRainwaterSerializer(data=request.data)
+        if serializer.is_valid():
+            problem, _ = Problem.objects.get_or_create(slug="trapped_rainwater", defaults={"title":"Trapped Rainwater", "leetcode_number": 42, "difficulty": "HARD"})
+            result = serializer.save()
+            submission = Submission.objects.create(problem=problem, input_data = serializer.validated_data, result=result)
+
+            return Response(
+                result,
+                status = status.HTTP_200_OK
+            )
+        
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+class ProductOfArrayExceptSelf(APIView):
+    def post(self, request):
+        
+        serializer = ProductOfArrayExceptSelfSerializer(data=request.data)
+
+        if serializer.is_valid():
+            problem, _ = Problem.objects.get_or_create(slug="product_of_array_except_self", defaults="title":"Product of Array Except Self", "leetcode_number": 238, "difficulty":"MEDIUM"})
+            result = serializer.save()
+            submission = Submission.objects.create(problem=problem, input_data = serializer.validated_data, result=result)
+
+            return Response(
+                result, 
+                status = status.HTTP_200_OK
+            )
+        
         return Response(
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
