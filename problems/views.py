@@ -19,7 +19,27 @@ from .serializers import (
 
 class ProblemListView(APIView):
     def get(self, request):
-        problems = Problem.objects.order_by('leetcode_number')
+        problems = Problem.objects.all()
+        difficulty = request.query_params.get('difficulty', '').upper()
+        min_number = request.query_params.get('min_number')
+        q = request.query_params.get('q')
+
+        if difficulty:
+            problems = problems.filter(difficulty=difficulty)
+
+        if min_number:
+            try:
+                problems = problems.filter(leetcode_number__gte=int(min_number))
+            except ValueError as e:
+                return Response(
+                    f"Issue with Min Number: {e}",
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+        if q:
+            problems = problems.filter(title__icontains=q)
+
+        problems = problems.order_by('leetcode_number')
         serializer = ProblemListSerializer(problems, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
