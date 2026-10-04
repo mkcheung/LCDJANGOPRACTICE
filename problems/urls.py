@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import (
     ContainerOfWaterView,
+    GroupAnagramsView,
     LongestIncreasingSubsequenceView,
     LongestNonRepeatingSubstringView,
     LongestPalindromeView,
@@ -23,5 +24,6 @@ urlpatterns = [
     path('trapped_rainwater/', TrappedRainwaterView.as_view(), name="trapped_rainwater"),
     path('two-sum/', TwoSumView.as_view(), name='two-sum'),
     path('valid_parenthesis/', ValidParenthesisView.as_view(), name="valid_parenthesis"),
+    path('group_anagrams/', GroupAnagramsView.as_view(), name="group_anagrams"),
     path('problems/', ProblemListView.as_view(), name="problems")
 ]

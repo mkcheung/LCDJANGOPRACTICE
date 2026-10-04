@@ -6,6 +6,7 @@ from .models import Problem, Submission
 
 from .serializers import (
     ContainerOfWaterSerializer,
+    GroupAnagramsSerializer,
     LongestIncreasingSubsequenceSerializer,
     LongestNonRepeatingSubstringSerializer,
     LongestPalindromeSerializer,
@@ -202,6 +203,25 @@ class ContainerOfWaterView(APIView):
                 status = status.HTTP_200_OK
             )
 
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+class GroupAnagramsView(APIView):
+    def post(self, request):
+        serializer = GroupAnagramsSerializer
+
+        if serializer.is_valid():
+            problem, _ = Problem.objects.get_or_create(slug="group_anagrams", defaults={"title":"Group Anagrams", "leetcode_number":49, "difficulty":'MEDIUM'})
+            result = serializer.save()
+            submission = Submission.objects.create(problem=problem, input_data = serializer.validated_data, result=result)
+
+            return Response(
+                result,
+                status = status.HTTP_200_OK
+            )
+        
         return Response(
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST

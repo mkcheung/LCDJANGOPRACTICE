@@ -1,14 +1,15 @@
 from rest_framework import serializers
 from .leetcode import (
-    two_sum,
-    three_zeroes,
+    container_of_water
+    group_anagrams,
+    longest_increasing_subseq,
     longest_non_repeating_substring,
     longest_palindrome,
-    longest_increasing_subseq,
-    valid_parenthesis,
-    trapped_rainwater,
     product_of_array_except_self,
-    container_of_water
+    three_zeroes,
+    trapped_rainwater,
+    two_sum,
+    valid_parenthesis,
 )
 from .models import Problem
 
@@ -168,4 +169,23 @@ class ContainerOfWaterSerializer(serializers.Serializer):
 
         return {
             'best_water':best_water
+        }
+
+class GroupAnagramsSerializer(serializers.Serializer):
+    s = serializers.ListField(
+        child=CharField.IntegerField()
+    )
+
+    grouped=serializers.ListField(
+        read_only=True,
+        serializers.ListField(
+            child=serializers.CharField()
+        )
+    )
+
+    def create(self, validated_data):
+        s = validated_data['s']
+        result = group_anagrams(s)
+        return {
+            'grouped':result
         }
