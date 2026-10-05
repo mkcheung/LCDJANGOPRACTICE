@@ -269,7 +269,7 @@ from collections import Counter
 
 def top_k_element(nums: List[int], num_of_top_elements: int) -> List[int]:
 
-    if not nums:
+    if not nums or num_of_top_elements <= 0:
         return []
 
     freq = Counter(nums)
@@ -282,10 +282,10 @@ def top_k_element(nums: List[int], num_of_top_elements: int) -> List[int]:
     result = []
     for i in range(len(buckets) - 1, 0, -1):
         for num in buckets[i]:
-            result.append(buckets[i])
+            result.append(num)
 
-        if len(result) == num_of_top_elements:
-            return result
+            if len(result) == num_of_top_elements:
+                return result
     
     return result
 

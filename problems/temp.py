@@ -266,27 +266,27 @@ def is_anagram(str1:str, str2:str) -> bool:
 
 from collections import Counter
 
-def top_k_element(nums:List[int], k:int) -> List:int:
-    if not nums:
-        return [] 
+def top_k_elements(nums:List[int], k: int) -> List[int]:
+    if not nums >= k:
+        return []
 
     freq = Counter(nums)
 
-    buckets = [ [] for _ in range(len(nums) + 1) ]
-    for numoccur, num in freq.items():
-        buckets[numoccur].append(num)
-    
-    result: List[int] = []
+    buckets = [for _ in range(len(nums) + 1)]
 
-    for i in range(len(buckets)-1, 0, -1):
-        for num in bucket[i]:
+    for num, count in freq.items():
+        buckets[count].append(num)
+    
+    result = list[int]
+
+    for i in range(len(buckets)-1, -1, -1):
+        for num in buckets[i]:
             result.append(num)
 
-            if len(result) = k
+            if len(result) >= k:
                 return result
     
     return result
-
 
 from typing import TypedDict
 
@@ -294,34 +294,38 @@ class ConsecutiveResult(TypedDict):
     best_length: int
     sequence: List[int]
 
-def longest_increasing_consecutive_subseq(seq: List[int]) -> List[int]:
-    sub_seq: List[int] = []
 
-    if not seq:
+ def longest_increasing_consecutive_subseq(nums: List[int]) -> ConsecutiveResult:
+    sub_seq: List[int] = []
+    
+    if not nums:
         return {
-            'best_length':0,
-            'sequence':[]
+            'best_length':0
+            'sequence' sub_seq
         }
 
-    num_set: List[int] = set(seq)
-    best_length: int = 0
+    num_set = set(nums)
+    best_length: int = 0 
 
-    for num in nums:
-        cur_seq:int = List[]
-        if num - 1 in num_set:
+    for num in num_set:
+        cur_seq: List[int] = []
+        if num-1 in num_set:
             length = 1
             current = num
-            cur_seq.append(num)
+            cur_seq.append(current)
             while current + 1 in num_set:
                 length += 1
                 current += 1
                 cur_seq.append(current)
+
             if length > best_length:
                 best_length = length
                 sub_seq = cur_seq
 
-    return sub_seq
-
+    return {
+        'best_length': best_length,
+        'sequence': sub_seq
+    }
 
 
 import heapq
