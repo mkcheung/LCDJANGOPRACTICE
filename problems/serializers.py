@@ -5,6 +5,7 @@ from .leetcode import (
     longest_increasing_subseq,
     longest_non_repeating_substring,
     longest_palindrome,
+    merge_intervals,
     product_of_array_except_self,
     three_zeroes,
     trapped_rainwater,
@@ -188,4 +189,26 @@ class GroupAnagramsSerializer(serializers.Serializer):
         result = group_anagrams(s)
         return {
             'grouped':result
+        }
+
+class MergeIntervalsSerializer(serializers.Serializer):
+    seqs = serializers.ListField(
+        child=serializers.ListField(
+            child=serializers.IntegerField()
+        )
+    )
+
+    merged = serializers.ListField(
+        read_only=True,
+        child=serializers.ListField(
+            child=serializers.IntegerField
+        )
+    )
+
+    def create(self, validated_data):
+        seqs = validated_data['seqs']
+        result = merge_intervals(seqs)
+
+        return {
+            'merged':result
         }
