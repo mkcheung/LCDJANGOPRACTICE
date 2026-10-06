@@ -264,29 +264,30 @@ def is_anagram(str1:str, str2:str) -> bool:
     
     return all( v == 0 for v in counts.values())
 
-from collections import Counter
+from collections import defaultdict
 
-def top_k_elements(nums:List[int], k: int) -> List[int]:
-    if not nums >= k:
-        return []
+def top_k_element(nums:List[int], top_k: num) -> List[int]:
+    if not nums or top_k == 0:
+        return 
 
     freq = Counter(nums)
 
-    buckets = [for _ in range(len(nums) + 1)]
+    buckets = [ for _ in range(len(nums) + 1) ]
 
-    for num, count in freq.items():
-        buckets[count].append(num)
-    
-    result = list[int]
+    for num, numHappening in freq.items():
+        buckets[numHappening].append(num)
+
+    results: List[int] = []
 
     for i in range(len(buckets)-1, -1, -1):
         for num in buckets[i]:
-            result.append(num)
+            results.append(num)
 
-            if len(result) >= k:
-                return result
-    
-    return result
+            if len(results) >= top_k:
+                return results
+
+    return results
+
 
 from typing import TypedDict
 

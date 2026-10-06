@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     ContainerOfWaterView,
     GroupAnagramsView,
+    IsAnagramView,
     LongestIncreasingSubsequenceView,
     LongestNonRepeatingSubstringView,
     LongestPalindromeView,
@@ -17,6 +18,7 @@ from .views import (
 
 urlpatterns = [
     path('container_of_water/', ContainerOfWaterView.as_view(), name="container_of_water"),
+    path('is_anagram/', IsAnagramView.as_view(), name="is_anagram"),
     path('longest_increasing_subsequence/', LongestIncreasingSubsequenceView.as_view(), name="longest_increasing_subsequence"),
     path('longest-non-repeat-substring/', LongestNonRepeatingSubstringView.as_view(), name="longest-non-repeat-substr"),
     path('longest_palindrome/', LongestPalindromeView.as_view(), name="longest_palindrome"),

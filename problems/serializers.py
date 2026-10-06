@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from .leetcode import (
-    container_of_water
+    container_of_water,
     group_anagrams,
+    is_anagram,
     longest_increasing_subseq,
     longest_non_repeating_substring,
     longest_palindrome,
@@ -174,12 +175,12 @@ class ContainerOfWaterSerializer(serializers.Serializer):
 
 class GroupAnagramsSerializer(serializers.Serializer):
     s = serializers.ListField(
-        child=CharField.IntegerField()
+        child=serializers.CharField()
     )
 
     grouped=serializers.ListField(
         read_only=True,
-        serializers.ListField(
+        child=serializers.ListField(
             child=serializers.CharField()
         )
     )
@@ -201,7 +202,7 @@ class MergeIntervalsSerializer(serializers.Serializer):
     merged = serializers.ListField(
         read_only=True,
         child=serializers.ListField(
-            child=serializers.IntegerField
+            child=serializers.IntegerField()
         )
     )
 
@@ -211,4 +212,20 @@ class MergeIntervalsSerializer(serializers.Serializer):
 
         return {
             'merged':result
+        }
+
+class IsAnagramSerializer(serializers.Serializer):
+    str1 = serializers.CharField()
+    str2 = serializers.CharField()
+    result = serializers.BooleanField(
+        read_only=True
+    )
+
+    def create(self, validated_data):
+        str1 = validated_data['str1']
+        str2 = validated_data['str2']
+        result = is_anagram(str1, str2)
+
+        return {
+            'result': result
         }
