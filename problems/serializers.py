@@ -178,7 +178,7 @@ class GroupAnagramsSerializer(serializers.Serializer):
         child=serializers.CharField()
     )
 
-    grouped=serializers.ListField(
+    grouped=serializers.DictField(
         read_only=True,
         child=serializers.ListField(
             child=serializers.CharField()

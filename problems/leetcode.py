@@ -224,14 +224,14 @@ def container_of_water(nums:List[int]) -> int:
 
 from collections import defaultdict
 
-def group_anagrams(s: List[str]) -> List[List[str]]:
+def group_anagrams(s: List[str]) -> dict[str, List[str]]:
     
     grouped = defaultdict(list)
-    for i, term in enumerate(s):
+    for term in s:
         sorted_string = "".join(sorted(term))
         grouped[sorted_string].append(term)
 
-    return grouped
+    return dict(grouped)
 
 def merge_intervals(seqs: List[List[int]]) -> List[List[int]]:
     if seqs is None:
