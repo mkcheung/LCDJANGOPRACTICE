@@ -14,15 +14,24 @@ from .leetcode import (
     two_sum,
     valid_parenthesis,
 )
-from .models import Problem
+from .models import (
+    Problem,
+    Submission
+)
+
+class SubmissionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Submission
+        fields = ['id', 'input_data', 'result', 'created_at']
 
 class ProblemListSerializer(serializers.ModelSerializer):
+    submissions = SubmissionsSerializer(many=True, read_only=True)
     class Meta:
         model = Problem
-        fields = ['slug', 'title', 'leetcode_number', 'difficulty', 'created_at']
+        fields = ['slug', 'title', 'leetcode_number', 'difficulty', 'created_at', 'submissions']
+
 
 class ThreeSumSerializer(serializers.Serializer):
-    
     nums = serializers.ListField(
         child=serializers.IntegerField()
     )

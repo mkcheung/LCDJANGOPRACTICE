@@ -31,5 +31,5 @@ urlpatterns = [
     path('two-sum/', TwoSumView.as_view(), name='two-sum'),
     path('valid_parenthesis/', ValidParenthesisView.as_view(), name="valid_parenthesis"),
     path('group_anagrams/', GroupAnagramsView.as_view(), name="group_anagrams"),
-    path('problems/', ProblemListView.as_view(), name="problems")
+    path('', ProblemListView.as_view(), name="problems")
 ]

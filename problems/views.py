@@ -15,6 +15,7 @@ from .serializers import (
     MergeIntervalsSerializer,
     ProblemListSerializer,
     ProductOfArrayExceptSelfSerializer,
+    SubmissionsSerializer,
     ThreeSumSerializer,
     TwoSumSerializer,
     TrappedRainwaterSerializer,
@@ -30,10 +31,9 @@ class ProblemListView(APIView):
 
         if difficulty:
             problems = problems.filter(difficulty=difficulty)
-
         if min_number:
             try:
-                problems = problems.filter(leetcode_number__gte=int(min_number))
+                problems = problems.filter(leetcode_number__gte=int(min_number).prefetch_related("submissions").order_by("-id"))
             except ValueError as e:
                 return Response(
                     f"Issue with Min Number: {e}",
