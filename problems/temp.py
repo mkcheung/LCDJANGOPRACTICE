@@ -50,27 +50,26 @@ def two_sum(nums:List[int], target:int) -> bool:
             have_seen[num] = i
     return[]
 
-def longest_non_repeating_substring(seq: str) -> str:
-    if not seq:
+def longest_non_repeating_subseq(s:str)->str:
+    if not s:
         return ''
+    
+    left:int = 0
+    best_left:int = 0
+    have_seen:dict[int, int] = {}
+    best_length:int = 0
 
-    last_seen: Dict(str, int) = {}
-    left: int = 0
-    best_left: int = 0
-    best_length: int = 0
+    for right, ch in enumerate(s):
+        if ch in have_seen and have_seen[ch] > left:
+            left = have_seen[ch] + 1
+        have_seen[ch] = right 
 
-    for right, ch in enumerate(seq):
-        if ch in last_seen and last_seen[ch] >= left:
-            left = last_seen[ch] + 1
-        
-        last_seen[ch] = right
-        
-        if right - left + 1 > best_length:
+        if best_length > right - left + 1:
             best_length = right - left + 1
             best_left = left
-    
-    return seq[best_left:best_left+best_length]
-    
+
+    return s[best_left:best_left+best_length]
+
 def longest_palindrome(s:str)->str:
     if not s:
         return ''
@@ -263,67 +262,67 @@ def is_anagram(str1:str, str2:str) -> bool:
     
     return all( v == 0 for v in counts.values())
 
-from collections import defaultdict
+from collections import Counter
 
-def top_k_element(nums:List[int], top_k: num) -> List[int]:
-    if not nums or top_k == 0:
-        return 
+def top_k_element(nums:List[int], k:int)->List[int]:
+    if not nums:
+        return []
 
     freq = Counter(nums)
 
-    buckets = [ for _ in range(len(nums) + 1) ]
+    buckets = [[] for _ in range(len(nums)+1)]
 
-    for num, numHappening in freq.items():
-        buckets[numHappening].append(num)
+    for num, numoccur in enumerate(freq):
+        buckets[numoccur].append(num)
 
     results: List[int] = []
 
     for i in range(len(buckets)-1, -1, -1):
-        for num in buckets[i]:
+        bucket = buckets[i]
+        for num in bucket.values():
             results.append(num)
-
-            if len(results) >= top_k:
+            if len(results) >= k:
                 return results
-
+    
     return results
 
 from typing import TypedDict
-
 class ConsecutiveResult(TypedDict):
-    best_length:int,
-    sequence:List[int]
+    best_length:int
+    sequence:List[str]
 
-def longest_increasing_consecutive_subseq(nums:List[int]): List[int]:
-    
+def longest_increasing_consecutive_subseq(nums: List[int])->List[int]:
     sub_seq: List[int] = []
     if not nums:
         return {
-            'best_length': 0,
+            'best_length':0
             'sequence': sub_seq
-        } 
+        }
 
-    num_set = set(nums)
-    best_length: int = 0
+    best_length:int = 0
 
-    for num in nums:
-        cur_seq: List[int] = []
-        if num - 1 in num_set:
+    num_seq:List[int] = set(nums)
+
+    for num in num_seq:
+        cur_seq:List[int] = []
+        if num-1 not in num_seq:
+            length = 1
             current = num
-            length += 1
             cur_seq.append(current)
-            while current + 1 in num_set:
+            while current + 1 in num_seq:
                 length += 1
                 current += 1
                 cur_seq.append(current)
-
-            if length >= best_length:
+            
+            if length > best_length:
                 best_length = length
                 sub_seq = cur_seq
-    return {
-        'best_length': best_length,
-        'sequence': sub_seq
-    }
 
+    return {
+        'best_length':best_length,
+        'sequence':sub_seq
+    }
+    
 import heapq
 
 def kth_largest_element(nums: List[int], k:int) -> int:
@@ -351,28 +350,30 @@ grid2 = [
     ['0', '0', '0', '1', '1'],
 ]  # only 3 islands here
 
-def num_islands(grid:List[List[int]]) -> int:
+def num_islands(grid: List[[List[str]]])->num:
     if not grid:
         return 0
 
+    rows_length = len(grid)
+    cols_length = len(grid[0])
     num_islands: int = 0
-    rows: int = len(grid)
-    cols: int = len(grid[0])
 
     def dfs(r:int, c:int):
-        if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] != '1':
+        if r < 0 or c < 0 or r >= rows_length or c >= cols_length or grid[r][c] == '0':
             return
-        grid[r][c] = '0'
+
+        if grid[r][c] == '1'
+            grid[r][c] == '0'
+
         dfs(r+1, c)
         dfs(r-1, c)
         dfs(r, c+1)
         dfs(r, c-1)
-        return
 
-
-    for r in range(rows):
-        for c in range(cols):
+    for r in range(rows_length):
+        for c in range(cols_length):
             if grid[r][c] == '1':
                 num_islands += 1
-                dfs(r,c)
+
+                dfs(r, c)
     return num_islands

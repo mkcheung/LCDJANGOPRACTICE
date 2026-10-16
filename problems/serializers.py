@@ -3,6 +3,7 @@ from .leetcode import (
     container_of_water,
     group_anagrams,
     is_anagram,
+    longest_increasing_consecutive_subseq,
     longest_increasing_subseq,
     longest_non_repeating_substring,
     longest_palindrome,
@@ -59,6 +60,29 @@ class TwoSumSerializer(serializers.Serializer):
 
         return {
             'nums':nums,
+            'result': result
+        }
+
+class ConsecutiveResultSerializer(serializers.Serializer):
+    best_length = serializers.IntegerField(source="Best Length")
+    sequence = serializers.ListField(
+        child=serializers.IntegerField(),
+        source="Sequence"
+    )
+
+class LongestIncreasingConsecutiveSubsequenceSerializer(serializers.Serializer):
+    nums = serializers.ListField(
+        child=serializers.IntegerField()
+    )
+
+    result = ConsecutiveResultSerializer(read_only=True)
+
+    def create(self, validated_data):
+        nums = validated_data['nums']
+        result = longest_increasing_consecutive_subseq(nums)
+
+        return {
+            'nums': nums,
             'result': result
         }
 

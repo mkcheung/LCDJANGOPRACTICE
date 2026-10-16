@@ -8,6 +8,7 @@ from .serializers import (
     ContainerOfWaterSerializer,
     GroupAnagramsSerializer,
     IsAnagramSerializer,
+    LongestIncreasingConsecutiveSubsequenceSerializer,
     LongestIncreasingSubsequenceSerializer,
     LongestNonRepeatingSubstringSerializer,
     LongestPalindromeSerializer,
@@ -69,6 +70,23 @@ class TwoSumView(APIView):
         serializer = TwoSumSerializer(data=request.data)
         if serializer.is_valid():
             problem, _ = Problem.objects.get_or_create(slug="two_sum", defaults={"title": "TWO SUM", "leetcode_number": 1, "difficulty": "EASY"})
+            result = serializer.save()
+            submission = Submission.objects.create(problem=problem, input_data=serializer.validated_data, result=result)
+
+            return Response(
+                result,
+                status=status.HTTP_200_OK
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+class LongestIncreasingConsecutiveSubsequenceView(APIView):
+    def post(self, request):
+        serializer = LongestIncreasingConsecutiveSubsequenceSerializer(data=request.data)
+        if serializer.is_valid():
+            problem, _ = Problem.objects.get_or_create(slug="longest_increasing_consecutive_subseq", defaults={"title": "Longest Consecutive Sequence", "leetcode_number":128, "difficulty":"MEDIUM"})
             result = serializer.save()
             submission = Submission.objects.create(problem=problem, input_data=serializer.validated_data, result=result)
 
